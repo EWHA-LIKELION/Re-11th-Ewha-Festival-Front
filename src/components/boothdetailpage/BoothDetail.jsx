@@ -15,15 +15,18 @@ const BoothDetail = () => {
   const [currentBooth, setCurrentBooth] = useState({});
   const [isNone, setIsNone] = useState(false);
   useEffect(() => {
-    GetBooth(id)
+    GetBooth(Number(id))
       .then(res => {
-        // console.log(res.data.data);
-        setCurrentBooth(res.data.data);
+        console.log(res);
+        setCurrentBooth(res);
       })
       .catch(err => {
-        if (err.response.data.detail === '찾을 수 없습니다.') setIsNone(true);
+        // if (err.response.data.detail === '찾을 수 없습니다.') setIsNone(true);
       });
   }, []);
+  useEffect(() => {
+    setIsNone(!currentBooth);
+  }, [currentBooth]);
   return (
     <>
       {isNone ? (

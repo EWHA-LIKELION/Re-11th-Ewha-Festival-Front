@@ -8,8 +8,8 @@ const BoothDetailNotice = () => {
   const { id } = useParams();
   const [notice, setNotice] = useState([]);
   useEffect(() => {
-    GetBooth(id)
-      .then(res => setNotice(res.data.data.notices[0]))
+    GetBooth(Number(id))
+      .then(res => setNotice(res.notices[0]))
       .catch();
   }, []);
   const urlRegex = /(https?:\/\/[^\s]+)/g;

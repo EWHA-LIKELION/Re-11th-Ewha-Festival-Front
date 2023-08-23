@@ -33,18 +33,18 @@ const BoothDetailComment = () => {
   const [thisBoothUserId, setThisBoothUserId] = useState(0);
   const [thisComments, setThisComments] = useState([]);
   const getComments = () => {
-    GetBooth(id)
+    GetBooth(Number(id))
       .then(res => {
-        setThisBoothUserId(res.data.data.user);
-        setThisComments(res.data.data.comments);
+        setThisBoothUserId(res.user);
+        setThisComments(res.comments);
       })
       .catch();
   };
   useEffect(() => {
     getComments();
-    RequestProfile(token)
-      .then(res => setThisUser(res.data.data.id))
-      .catch();
+    // RequestProfile(token)
+    //   .then(res => setThisUser(res.data.data.id))
+    //   .catch();
   }, []);
   const IsBoothUser = cUserId => {
     if (thisBoothUserId === cUserId) {

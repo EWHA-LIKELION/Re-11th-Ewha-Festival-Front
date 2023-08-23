@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import useBookmark from '../_common/useBookmark';
 import ImageGallery from './ImageGallery';
@@ -14,6 +14,7 @@ import fillheart from '../../assets/images/fillheart.svg';
 
 const BoothDetailTitle = props => {
   let { id } = useParams();
+  const nav = useNavigate();
   const { currentBooth, setCurrentBooth } = props;
   const { name, thumnail, category, hashtag, is_liked } = currentBooth;
   const { state, toggle } = useBookmark(is_liked, id);
@@ -23,8 +24,11 @@ const BoothDetailTitle = props => {
       is_liked: state,
     });
   }, [state]);
+  // 로그인 상태 검사 로직 추가 필요
+  const [isLogin, setIsLogin] = useState(true);
   const [imgModal, setImgModal] = useState(false);
   const [sideBar, setSideBar] = useState(false);
+
   return (
     <COM.Wrapper>
       <T.CircleWrapper>
@@ -49,7 +53,16 @@ const BoothDetailTitle = props => {
               <div className='text'>{name}</div>
             </T.Title>
           </div>
-          <T.HeartDiv onClick={toggle}>
+          <T.HeartDiv
+            onClick={
+              isLogin
+                ? toggle
+                : () => {
+                    alert('로그인 후 북마크 기능을 사용하실 수 있습니다.');
+                    nav('/auth/login');
+                  }
+            }
+          >
             {/* <object
               type='image/svg+xml'
               data={is_liked ? fillheart : strokeheart}

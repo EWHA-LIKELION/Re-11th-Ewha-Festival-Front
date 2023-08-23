@@ -2,6 +2,9 @@ import BoothService from './service/boothservice';
 import { http } from './http';
 import { RequestLogout } from './auth';
 
+// mock data
+import { boothsdata } from './_mock/boothmock';
+
 export const GetLikes = async (keyword, detail, page) => {
   try {
     const response = await http.get(
@@ -37,7 +40,7 @@ export const LikeBooth = async boothId => {
     return Promise.resolve(response);
   } catch (error) {
     if (
-      error.response.data.detail ==
+      error.response.data.detail ===
       '이 토큰은 모든 타입의 토큰에 대해 유효하지 않습니다'
     ) {
       RequestLogout();
@@ -52,7 +55,7 @@ export const UnLikeBooth = async boothId => {
     return Promise.resolve(response);
   } catch (error) {
     if (
-      error.response.data.detail ==
+      error.response.data.detail ===
       '이 토큰은 모든 타입의 토큰에 대해 유효하지 않습니다'
     ) {
       RequestLogout();
@@ -67,7 +70,7 @@ export const GetSearchBooth = async keyword => {
     return Promise.resolve(response);
   } catch (error) {
     if (
-      error.response.data.detail ==
+      error.response.data.detail ===
       '이 토큰은 모든 타입의 토큰에 대해 유효하지 않습니다'
     ) {
       RequestLogout();
@@ -82,7 +85,7 @@ export const GetLocationBooth = async (day, college, page) => {
     return Promise.resolve(response);
   } catch (error) {
     if (
-      error.response.data.detail ==
+      error.response.data.detail ===
       '이 토큰은 모든 타입의 토큰에 대해 유효하지 않습니다'
     ) {
       RequestLogout();
@@ -97,7 +100,7 @@ export const GetCategoryBooth = async (day, category, page) => {
     return Promise.resolve(response);
   } catch (error) {
     if (
-      error.response.data.detail ==
+      error.response.data.detail ===
       '이 토큰은 모든 타입의 토큰에 대해 유효하지 않습니다'
     ) {
       RequestLogout();
@@ -112,7 +115,7 @@ export const GetDayBooth = async (day, page) => {
     return Promise.resolve(response);
   } catch (error) {
     if (
-      error.response.data.detail ==
+      error.response.data.detail ===
       '이 토큰은 모든 타입의 토큰에 대해 유효하지 않습니다'
     ) {
       RequestLogout();
@@ -123,11 +126,11 @@ export const GetDayBooth = async (day, page) => {
 
 export const GetBooth = async boothId => {
   try {
-    const response = await BoothService.getBooth(boothId);
-    return Promise.resolve(response);
+    // const response = await BoothService.getBooth(boothId);
+    return Promise.resolve(boothsdata.filter(item => item.id === boothId)[0]);
   } catch (error) {
     if (
-      error.response.data.detail ==
+      error.response.data.detail ===
       '이 토큰은 모든 타입의 토큰에 대해 유효하지 않습니다'
     ) {
       RequestLogout();
@@ -142,7 +145,7 @@ export const SubmitComment = async (boothId, newComment) => {
     return Promise.resolve(response);
   } catch (error) {
     if (
-      error.response.data.detail ==
+      error.response.data.detail ===
       '이 토큰은 모든 타입의 토큰에 대해 유효하지 않습니다'
     ) {
       RequestLogout();
@@ -157,7 +160,7 @@ export const DeleteComment = async (boothId, cId) => {
     return Promise.resolve(response);
   } catch (error) {
     if (
-      error.response.data.detail ==
+      error.response.data.detail ===
       '이 토큰은 모든 타입의 토큰에 대해 유효하지 않습니다'
     ) {
       RequestLogout();
@@ -177,7 +180,7 @@ export const PatchBooth = async (boothId, name, opened, description) => {
     return Promise.resolve(response);
   } catch (error) {
     if (
-      error.response.data.detail ==
+      error.response.data.detail ===
       '이 토큰은 모든 타입의 토큰에 대해 유효하지 않습니다'
     ) {
       RequestLogout();
@@ -196,7 +199,7 @@ export const PatchBoothNotice = async (boothId, notice, noticeId) => {
     return Promise.resolve(response);
   } catch (error) {
     if (
-      error.response.data.detail ==
+      error.response.data.detail ===
       '이 토큰은 모든 타입의 토큰에 대해 유효하지 않습니다'
     ) {
       RequestLogout();
@@ -211,7 +214,7 @@ export const PatchBoothTime = async (boothId, index, time) => {
     return Promise.resolve(response);
   } catch (error) {
     if (
-      error.response.data.detail ==
+      error.response.data.detail ===
       '이 토큰은 모든 타입의 토큰에 대해 유효하지 않습니다'
     ) {
       RequestLogout();
@@ -226,7 +229,7 @@ export const GetMenu = async boothId => {
     return Promise.resolve(response);
   } catch (error) {
     if (
-      error.response.data.detail ==
+      error.response.data.detail ===
       '이 토큰은 모든 타입의 토큰에 대해 유효하지 않습니다'
     ) {
       RequestLogout();
@@ -247,7 +250,7 @@ export const PatchMenu = async (boothId, menuId, menu, price, is_soldout) => {
     return Promise.resolve(response);
   } catch (error) {
     if (
-      error.response.data.detail ==
+      error.response.data.detail ===
       '이 토큰은 모든 타입의 토큰에 대해 유효하지 않습니다'
     ) {
       RequestLogout();
