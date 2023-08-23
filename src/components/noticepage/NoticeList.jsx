@@ -10,17 +10,17 @@ import { HiOutlinePencilAlt } from 'react-icons/hi';
 const NoticeList = () => {
   const nav = useNavigate();
   const token = localStorage.getItem('token');
-  const [isTF, setIsTF] = useState(false);
+  const [isTF, setIsTF] = useState(true);
   const [notices, setNotices] = useState([]);
   useEffect(() => {
-    RequestProfile(token)
-      .then(res => {
-        setIsTF(res.data.data.is_tf);
-      })
-      .catch();
+    // RequestProfile(token)
+    //   .then(res => {
+    //     setIsTF(res.data.data.is_tf);
+    //   })
+    //   .catch();
     GetAllNotice()
       .then(res => {
-        setNotices(res.data.data);
+        setNotices(res);
       })
       .catch();
   }, []);

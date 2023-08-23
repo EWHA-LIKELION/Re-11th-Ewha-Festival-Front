@@ -13,11 +13,16 @@ const NoticeWrite = () => {
   const handleTitle = e => setNewTitle(e.target.value);
   const handleContent = e => setNewContent(e.target.value);
   const OnSubmit = () => {
-    SubmitNotice(newTitle, newContent)
-      .then(res => {
-        nav(`/notice/${res.data.data.id}`);
-      })
-      .catch();
+    if (newTitle === '' || newContent === '')
+      alert('제목과 내용을 모두 입력했는지 확인해주세요!');
+    else {
+      // SubmitNotice(newTitle, newContent)
+      //   .then(res => {
+      //     nav(`/notice/${res.data.data.id}`);
+      //   })
+      //   .catch();
+      alert('더 이상 새 글 작성 기능을 제공하지 않습니다.');
+    }
   };
   const [cancelModal, setCancelModal] = useState(false);
   return (

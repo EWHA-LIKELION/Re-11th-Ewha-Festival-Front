@@ -13,28 +13,28 @@ const NoticeDetail = () => {
   const nav = useNavigate();
   const textarea = useRef();
   const token = localStorage.getItem('token');
-  const [isTF, setIsTF] = useState(false);
+  const [isTF, setIsTF] = useState(true);
   const [notice, setNotice] = useState({});
   const getNotice = () => {
-    GetNotice(id)
+    GetNotice(Number(id))
       .then(res => {
-        setNotice(res.data.data);
+        setNotice(res);
       })
       .catch();
     setNewTitle(notice.title);
     setNewContent(notice.content);
   };
   useEffect(() => {
-    RequestProfile(token)
-      .then(res => {
-        setIsTF(res.data.data.is_tf);
-      })
-      .catch();
+    // RequestProfile(token)
+    //   .then(res => {
+    //     setIsTF(res.data.data.is_tf);
+    //   })
+    //   .catch();
     getNotice();
   }, []);
 
   const OnDelete = () => {
-    DeleteNotice(id)
+    DeleteNotice(Number(id))
       .then(res => {
         nav('/notice');
       })
@@ -45,17 +45,19 @@ const NoticeDetail = () => {
   const handleTitle = e => setNewTitle(e.target.value);
   const handleContent = e => setNewContent(e.target.value);
   const OnPatch = () => {
-    PatchNotice(id, newTitle, newContent)
-      .then(res => {
-        setIsEditing(false);
-        getNotice();
-      })
-      .catch();
+    setNotice({ ...notice, title: newTitle, content: newContent });
+    setIsEditing(false);
+    // PatchNotice(id, newTitle, newContent)
+    //   .then(res => {
+    //     setIsEditing(false);
+    //     getNotice();
+    //   })
+    //   .catch();
   };
   const [deleteModal, setDeleteModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   useEffect(() => {
-    getNotice();
+    if (isEditing) getNotice();
   }, [isEditing]);
   return (
     <COM.Wrapper>
