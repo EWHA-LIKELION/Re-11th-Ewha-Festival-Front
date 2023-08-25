@@ -73,17 +73,17 @@ export const Button = styled.button`
   background: #029c54;
   color: #ffffff;
 `;
-export const GoRegister = styled.div`
+export const InfoWrapper = styled.div`
   width: 100%;
   margin-top: 20px;
 
   display: flex;
   justify-content: end;
 
-  a {
-    font-size: 12px;
+  div {
+    font-size: 13px;
     color: #979797;
     text-decoration: none;
-    padding-right: 2px;
+    margin-right: 7px;
   }
 `;
