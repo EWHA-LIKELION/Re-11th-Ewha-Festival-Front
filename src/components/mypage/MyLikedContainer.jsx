@@ -4,7 +4,8 @@ import { useRef } from 'react';
 import { useAppSelector } from '../../redux/store';
 // api
 import { GetLikes, GetLikesAll, GetLikesAllNum } from '../../api/booth';
-
+// data
+import { boothsdata } from '../../api/_mock/boothmock';
 // component
 import BoothComponent from '../boothpage/BoothComponent';
 import MyFilterBar from './MyFilterBar';
@@ -46,12 +47,18 @@ const MyLikedContainer = () => {
     else return 4;
   };
 
-  //좋아요 개수 변경에 따른 렌더링
+  // 테스트 코드
   useEffect(() => {
-    GetLikesAllNum().then(res => {
-      setLikeNum(res.data.total);
-    });
-  }, [changeLike]);
+    setLikeNum(1);
+    setBooth(boothsdata);
+  }, []);
+
+  //좋아요 개수 변경에 따른 렌더링
+  // useEffect(() => {
+  //   GetLikesAllNum().then(res => {
+  //     setLikeNum(res.data.total);
+  //   });
+  // }, [changeLike]);
 
   const boothRef = useRef(null);
   const scrollToBooth = () => {
@@ -59,33 +66,33 @@ const MyLikedContainer = () => {
   };
 
   // 필터링 값 변경에 따른 get api
-  useEffect(() => {
-    switch (filter) {
-      case 'all':
-        GetLikesAll(liked_page_num).then(res => {
-          setBooth(res.data.data);
-          setTotalPage(res.data.total_page);
-        });
-      case 'day':
-        GetLikes(filter, getDay(), liked_page_num).then(res => {
-          setBooth(res.data.data);
-          setTotalPage(res.data.total_page);
-        });
-        break;
-      case 'location':
-        GetLikes('college', filter_location, liked_page_num).then(res => {
-          setBooth(res.data.data);
-          setTotalPage(res.data.total_page);
-        });
-        break;
-      case 'category':
-        GetLikes(filter, getCategory(), liked_page_num).then(res => {
-          setBooth(res.data.data);
-          setTotalPage(res.data.total_page);
-        });
-        break;
-    }
-  }, [filter, filter_day, filter_location, filter_category, liked_page_num]);
+  // useEffect(() => {
+  //   switch (filter) {
+  //     case 'all':
+  //       GetLikesAll(liked_page_num).then(res => {
+  //         setBooth(res.data.data);
+  //         setTotalPage(res.data.total_page);
+  //       });
+  //     case 'day':
+  //       GetLikes(filter, getDay(), liked_page_num).then(res => {
+  //         setBooth(res.data.data);
+  //         setTotalPage(res.data.total_page);
+  //       });
+  //       break;
+  //     case 'location':
+  //       GetLikes('college', filter_location, liked_page_num).then(res => {
+  //         setBooth(res.data.data);
+  //         setTotalPage(res.data.total_page);
+  //       });
+  //       break;
+  //     case 'category':
+  //       GetLikes(filter, getCategory(), liked_page_num).then(res => {
+  //         setBooth(res.data.data);
+  //         setTotalPage(res.data.total_page);
+  //       });
+  //       break;
+  //   }
+  // }, [filter, filter_day, filter_location, filter_category, liked_page_num]);
 
   return (
     <>

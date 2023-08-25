@@ -69,8 +69,7 @@ const MyMenu = () => {
             </S.GoManageBtn>
           </S.BoothContainer>
         )}
-        <div> 좋아요한 부스 목록 작업 예정</div>
-        {/* <MyLikedContainer /> */}
+        <MyLikedContainer />
       </S.Container>
       <Footer />
     </>
