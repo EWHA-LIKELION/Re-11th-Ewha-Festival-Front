@@ -49,7 +49,7 @@ const LoginMenu = () => {
   // 테스트 로그인 처리
   const testLogin = isBooth => {
     if (isBooth == -1) {
-      console.log('예외처리');
+      alert('테스트 계정으로 로그인해주세요.');
     } else {
       // 1일간 유효한 토큰 쿠키에 저장
       setCookie('token', 'true');
