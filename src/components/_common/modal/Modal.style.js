@@ -86,6 +86,7 @@ export const ModalContents = styled.div`
 
   text-align: center;
   font-size: 14px;
+  line-height: 20px;
   color: #004628;
   white-space: pre-line;
 `;
