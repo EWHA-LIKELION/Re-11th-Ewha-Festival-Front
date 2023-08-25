@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // api
 import { RequestLogout } from '../../api/auth';
-import { GetBooth } from '../../api/booth';
 // redux
 import { useAppSelector } from '../../redux/store';
+import { persistor } from '../../index';
 // style.js
 import * as S from './MyMenu.style';
 //icons
@@ -16,37 +16,32 @@ import MyLikedContainer from './MyLikedContainer';
 import Footer from '../_common/footer/Footer';
 
 const MyMenu = () => {
-  useEffect(() => {
-    if (isBooth) {
-      GetBooth(booth_id).then(res => {
-        setBoothName(res.data.data.name);
-      });
-    }
-  }, []);
-
   const navigate = useNavigate();
   // 유저 정보 redux
-  const { ID, nickname, isBooth, isTF } = useAppSelector(state => state.user);
+  const { ID, nickname, isBooth } = useAppSelector(state => state.user);
   const { booth_id } = useAppSelector(state => state.booth);
   // 부스 정보
-  const [boothName, setBoothName] = useState('');
+  const boothName = '멋쟁이사자처럼';
 
-  // test 값
+  // 로그아웃 함수
+  const logout = () => {
+    persistor.purge();
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    navigate('/auth/login');
+  };
   return (
     <>
       <S.Container>
         <TopBar title='마이페이지' />
         <S.NameContainer>
-          <S.TaskTitle>
-            {isBooth ? '부스 관리자' : isTF ? 'TF 팀' : ''}
-          </S.TaskTitle>
+          {isBooth && <S.TaskTitle>부스 관리자</S.TaskTitle>}
           <S.Name size={nickname.length >= 6 ? '22px' : '27px'}>
             {nickname}
           </S.Name>
           <S.ID>{ID}</S.ID>
-          <S.Logout onClick={RequestLogout}>로그아웃</S.Logout>
+          <S.Logout onClick={logout}>로그아웃</S.Logout>
         </S.NameContainer>
-        {isBooth ? (
+        {isBooth && (
           <S.BoothContainer>
             <S.ManageTitle>부스 관리</S.ManageTitle>
             <S.BoothTitle size={boothName.length >= 24 ? '14' : '16'}>
@@ -73,25 +68,7 @@ const MyMenu = () => {
               <FiChevronRight />
             </S.GoManageBtn>
           </S.BoothContainer>
-        ) : isTF ? (
-          <S.TfContainer>
-            <S.ManageTitle>공지 관리</S.ManageTitle>
-            <S.GoManageBtn onClick={() => navigate('/notice')}>
-              <div>
-                <AiOutlineSound className='noticeIcon' />
-                TF 공지사항 바로가기
-              </div>
-              <FiChevronRight />
-            </S.GoManageBtn>
-            <S.GoManageBtn onClick={() => navigate('/notice/write')}>
-              <div>
-                <FiEdit />
-                TF 공지사항 작성하기
-              </div>
-              <FiChevronRight />
-            </S.GoManageBtn>
-          </S.TfContainer>
-        ) : null}
+        )}
         <MyLikedContainer />
       </S.Container>
       <Footer />

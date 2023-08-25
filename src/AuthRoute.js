@@ -1,8 +1,15 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-const isLogin = () => !!localStorage.getItem('token');
+// 쿠키에서 값을 가져오는 함수
+const getToken = () => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; token=`);
+  if (parts.length === 2) {
+    return parts.pop().split(';').shift();
+  }
+};
 
 export default function AuthRoute({ component: Component }) {
-  return isLogin() ? Component : <Navigate to='/auth/login' />;
+  return getToken() ? Component : <Navigate to='/auth/login' />;
 }

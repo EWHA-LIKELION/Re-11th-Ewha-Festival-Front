@@ -31,7 +31,7 @@ const Modal = props => {
                 <S.ModalSubtitle> {subTitle}</S.ModalSubtitle>
                 <S.ModalContents>{contents}</S.ModalContents>
                 <S.ButtonWrapper>
-                  {path.includes('register') ? (
+                  {path.includes('register') || path.includes('login') ? (
                     <S.GreenBtn onClick={close}>닫기</S.GreenBtn>
                   ) : (
                     <>
