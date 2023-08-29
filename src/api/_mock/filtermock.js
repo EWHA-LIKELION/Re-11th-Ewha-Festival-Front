@@ -1,7 +1,7 @@
 export const dayData = [
-  { date: 10, day: '수' },
-  { date: 11, day: '목' },
-  { date: 12, day: '금' },
+  { date: 10, day: '수요일' },
+  { date: 11, day: '목요일' },
+  { date: 12, day: '금요일' },
 ];
 export const locationData = [
   '정문',

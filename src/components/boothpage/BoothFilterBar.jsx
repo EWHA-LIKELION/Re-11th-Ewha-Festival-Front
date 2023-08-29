@@ -90,7 +90,7 @@ const BoothFilterBar = () => {
             onClick={() => saveFilterDay(props.day)}
           >
             <div className='number'>{props.date}</div>
-            <div className='day'>{props.day}요일</div>
+            <div className='day'>{props.day}</div>
           </F.DayContainer>
         ))}
       </F.DayFilterContainer>
