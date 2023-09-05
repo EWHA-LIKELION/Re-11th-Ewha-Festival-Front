@@ -2,15 +2,16 @@ import React, { useEffect, useState, useRef } from 'react';
 
 // redux
 import { useAppSelector } from '../../redux/store';
-// api
+
+// parsing boothdata function
 import {
   GetLocationBooth,
   GetCategoryBooth,
   GetDayBooth,
-} from '../../api/booth';
-// import { dayData } from './mock';
-// import { locationData } from './mock';
-// import { categoryData } from './mock';
+} from './ParsingBoothData';
+
+// mock data
+import { boothsdata as mockdata } from '../../api/_mock/boothmock';
 
 // component
 import TopBar from '../_common/topbar/TopBar';
@@ -22,8 +23,6 @@ import { B } from './Booth.style';
 import { useMap } from '../boothdetailpage/useMap';
 import Footer from '../_common/footer/Footer';
 import Pagination from './Pagination';
-import { useDispatch } from 'react-redux';
-import { setPageNumberInit } from '../../redux/pageSlice';
 import circle from '../../assets/images/boothpage/circle.svg';
 import { TbArrowBigUpLineFilled } from 'react-icons/tb';
 
@@ -34,59 +33,52 @@ const Booth = () => {
     filter_location,
     filter_category,
     filter_viewer,
+    // 이부분 아직 해결 x
     booth_page_num,
   } = useAppSelector(state => state.page);
-
-  const dispatch = useDispatch();
 
   // state
   const [booth, setBooth] = useState([]);
   const [length, setLength] = useState(0);
-
-  const getDay = () => {
-    if (filter_day === '수') return 1;
-    else if (filter_day === '목') return 2;
-    else return 3;
-  };
-
-  const getCategory = () => {
-    if (filter_category === '음식') return 1;
-    else if (filter_category === '굿즈') return 3;
-    else if (filter_category === '체험') return 2;
-    else return 4;
-  };
-
   const [totalPage, setTotalPage] = useState(0);
-  const [state, setState] = useState(1);
+  const [allboothdata, setAllboothdata] = useState([]);
 
-  // get api
+  // api 호출 함수
+  const getAllbooth = () => {
+    console.log('GET: 전체 부스 호출');
+    setAllboothdata(mockdata);
+  };
+
+  // 초기 1회 전체 부스 호출
   useEffect(() => {
-    if (filter_viewer === 'location') {
-      GetLocationBooth(getDay(), filter_location, booth_page_num).then(res => {
-        setBooth(res.data.data);
-        setLength(res.data.total);
-        setTotalPage(res.data.total_page);
-      });
-    } else if (filter_viewer === 'category') {
-      GetCategoryBooth(getDay(), getCategory(), booth_page_num).then(res => {
-        setBooth(res.data.data);
-        setLength(res.data.total);
-        setTotalPage(res.data.total_page);
-      });
+    getAllbooth();
+  }, []);
+
+  const getBoothData = async () => {
+    if (filter_viewer == 'location') {
+      const res = await GetLocationBooth(
+        GetDayBooth(allboothdata, filter_day),
+        filter_location,
+      );
+      setBooth(res);
+      setLength(res.length);
+    } else if (filter_viewer == 'category') {
+      const res = await GetCategoryBooth(
+        GetDayBooth(allboothdata, filter_day),
+        filter_category,
+      );
+      setBooth(res);
+      setLength(res.length);
     } else {
-      GetDayBooth(getDay(), booth_page_num).then(res => {
-        setBooth(res.data.data);
-        setLength(res.data.total);
-        setTotalPage(res.data.total_page);
-      });
+      const res = await GetDayBooth(allboothdata, filter_day);
+      setBooth(res);
+      setLength(res.length);
     }
-  }, [
-    filter_day,
-    filter_location,
-    filter_category,
-    filter_viewer,
-    booth_page_num,
-  ]);
+  };
+
+  useEffect(() => {
+    getBoothData();
+  }, [filter_day, filter_location, filter_category, filter_viewer]);
 
   const mapSrc = useMap(filter_location);
 
