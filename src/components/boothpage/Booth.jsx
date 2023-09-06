@@ -41,7 +41,7 @@ const Booth = () => {
   const [booth, setBooth] = useState([]);
   const [length, setLength] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
-  const [allboothdata, setAllboothdata] = useState([]);
+  const [allboothdata, setAllboothdata] = useState(mockdata);
 
   // api 호출 함수
   const getAllbooth = () => {
